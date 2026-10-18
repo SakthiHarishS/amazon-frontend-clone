@@ -1,0 +1,126 @@
+.ai-chatbot-wrapper {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 2000;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.ai-chat-toggle-btn {
+  background: linear-gradient(135deg, #ff9900, #e47911);
+  color: #111;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 20px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  transition: transform 0.2s;
+}
+
+.ai-chat-toggle-btn:hover {
+  transform: scale(1.05);
+}
+
+.ai-chat-window {
+  width: 340px;
+  height: 440px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #d5d9d9;
+}
+
+.ai-chat-header {
+  background: #002f36;
+  color: white;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.ai-chat-messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f7f8f8;
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: #ffd814;
+  color: #111;
+  font-weight: 600;
+}
+
+.chat-bubble.ai {
+  align-self: flex-start;
+  background: white;
+  color: #222;
+  border: 1px solid #e2e2e2;
+}
+
+.ai-chat-input-area {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #eee;
+  background: white;
+}
+
+.ai-chat-input-area input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 12px;
+  outline: none;
+}
+
+.ai-chat-input-area button {
+  background: #007185;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

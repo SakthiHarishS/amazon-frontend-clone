@@ -1,0 +1,278 @@
+/* ===================================================
+   AMAZON NAVBAR BASE STYLES
+   =================================================== */
+
+.amazon-navbar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #131921;
+  padding: 8px 16px;
+  color: white;
+  gap: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: baseline;
+  text-decoration: none;
+  color: white;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: white;
+}
+
+.logo-domain {
+  font-size: 13px;
+  color: #febd69;
+  font-weight: bold;
+}
+
+.nav-address {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  cursor: pointer;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
+.nav-address:hover {
+  border-color: white;
+}
+
+.location-icon {
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.address-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.line-one {
+  font-size: 11px;
+  color: #ccc;
+  line-height: 12px;
+}
+
+.line-two {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 15px;
+}
+
+/* ===================================================
+   SEARCH BAR STYLES
+   =================================================== */
+
+.nav-search {
+  display: flex;
+  flex: 1;
+  max-width: 800px;
+  height: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.nav-search:focus-within {
+  border-color: #ff9900;
+}
+
+.search-select {
+  background-color: #f3f3f3;
+  border: none;
+  padding: 0 10px;
+  font-size: 12px;
+  border-right: 1px solid #ddd;
+  outline: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  padding: 0 12px;
+  font-size: 14px;
+  outline: none;
+  color: #111;
+}
+
+.camera-search-btn {
+  background-color: #ffffff;
+  border: none;
+  padding: 0 12px;
+  color: #007185;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.camera-search-btn:hover {
+  color: #c45500;
+  background-color: #f7f7f7;
+}
+
+.search-btn {
+  background-color: #febd69;
+  border: none;
+  width: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #333;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.search-btn:hover {
+  background-color: #f3a847;
+}
+
+/* ===================================================
+   RIGHT NAVBAR OPTIONS & BADGES
+   =================================================== */
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-option {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
+.nav-option:hover {
+  border-color: white;
+}
+
+.wishlist-badge-count {
+  background-color: #c40000;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 1px 6px;
+  border-radius: 10px;
+  margin-left: 3px;
+}
+
+.nav-cart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
+.nav-cart:hover {
+  border-color: white;
+}
+
+.cart-icon-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon {
+  font-size: 26px;
+  color: white;
+}
+
+.cart-count {
+  position: absolute;
+  top: -4px;
+  right: 6px;
+  color: #f08804;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.cart-text {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+/* ===================================================
+   RESPONSIVE MOBILE & TABLET BREAKPOINTS
+   =================================================== */
+
+@media (max-width: 900px) {
+  .nav-address {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .amazon-navbar-header {
+    padding: 10px;
+    flex-wrap: wrap;
+  }
+
+  .nav-search {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 6px;
+  }
+
+  .nav-right {
+    gap: 12px;
+  }
+
+  .line-one {
+    display: none;
+  }
+
+  .search-select {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .nav-cart .cart-text {
+    display: none;
+  }
+
+  .nav-right {
+    gap: 8px;
+  }
+}

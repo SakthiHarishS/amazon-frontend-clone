@@ -1,0 +1,27 @@
+.subheader {
+  display: flex;
+  align-items: center;
+  background-color: #232f3e; /* Secondary dark navy */
+  color: white;
+  padding: 8px 16px;
+  gap: 20px;
+  font-size: 14px;
+}
+
+.subheader-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.subheader-option:hover {
+  border-color: white;
+}
+
+.subheader-all {
+  font-weight: bold;
+}
