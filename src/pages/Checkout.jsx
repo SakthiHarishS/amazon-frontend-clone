@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import './Checkout.css';
 
 const Checkout = () => {
@@ -28,7 +29,7 @@ const Checkout = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/api/orders', orderPayload);
+      const response = await axios.post(`${API_BASE_URL}/orders`, orderPayload);
       alert(`Order Placed Successfully via ${method}! Order ID: #${response.data.id}`);
       clearCart();
       navigate('/orders');
@@ -52,8 +53,8 @@ const Checkout = () => {
 
     if (paymentMethod === 'RAZORPAY') {
       try {
-        // 1. Get Razorpay Order details from Spring Boot Backend
-        const rzpResponse = await axios.post('http://localhost:8080/api/orders/create-razorpay-order', {
+        // 1. Get Razorpay Order details from Backend
+        const rzpResponse = await axios.post(`${API_BASE_URL}/orders/create-razorpay-order`, {
           amount: getCartTotal()
         });
 
@@ -66,7 +67,7 @@ const Checkout = () => {
           currency: currency,
           name: "Amazon Clone",
           description: "Order Payment",
-          order_id: orderId, // Real Razorpay Backend Order ID
+          order_id: orderId,
           handler: function (response) {
             alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
             placeOrderInBackend("RAZORPAY (Paid)");

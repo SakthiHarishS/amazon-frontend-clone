@@ -1,94 +1,68 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import API_BASE_URL from '../api'; // Import helper API base URL
 import './Login.css';
 
 const Login = () => {
   const [isSignup, setIsSignup] = useState(false);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const endpoint = isSignup ? 'signup' : 'login';
-    const payload = isSignup ? { name, email, password } : { email, password };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    try {
-      const response = await axios.post(`http://localhost:8080/api/auth/${endpoint}`, payload);
-      
-      if (response.data && response.data.email) {
-        // Token illamal direct user details local storage-la save panrom
-        localStorage.setItem('user', JSON.stringify({ name: response.data.name, email: response.data.email }));
-        alert(`${isSignup ? 'Account Created' : 'Logged in'} Successfully!`);
-        navigate('/');
-        window.location.reload();
-      }
-    } catch (error) {
-      alert(error.response?.data || 'Authentication failed! Check credentials.');
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const endpoint = isSignup 
+      ? `${API_BASE_URL}/users/register` 
+      : `${API_BASE_URL}/users/login`;
+
+    axios.post(endpoint, formData)
+      .then(res => {
+        alert(isSignup ? 'Registration Successful! Please Sign In.' : 'Logged In Successfully!');
+        if (!isSignup) {
+          localStorage.setItem('user', JSON.stringify(res.data));
+          navigate('/');
+          window.location.reload();
+        } else {
+          setIsSignup(false);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert(err.response?.data?.message || 'Authentication Failed! Check credentials.');
+      });
   };
 
   return (
-    <div className="login-container">
-      <Link to="/" className="login-logo">
-        <span className="logo-text-dark">amazon</span>
-        <span className="logo-domain-dark">.in</span>
-      </Link>
-
-      <div className="login-box">
-        <h2>{isSignup ? 'Create Account' : 'Sign in'}</h2>
+    <div className="login-wrapper">
+      <div className="login-card">
+        <h2>{isSignup ? 'Create Account' : 'Sign In'}</h2>
         <form onSubmit={handleSubmit}>
           {isSignup && (
-            <div className="input-group">
-              <label>Your name</label>
-              <input 
-                type="text" 
-                value={name} 
-                onChange={(e) => setName(e.target.value)} 
-                required 
-              />
+            <div className="form-group">
+              <label>Your Name</label>
+              <input type="text" name="name" className="form-input" value={formData.name} onChange={handleChange} required />
             </div>
           )}
-
-          <div className="input-group">
-            <label>Email</label>
-            <input 
-              type="email" 
-              value={email} 
-              onChange={(e) => setEmail(e.target.value)} 
-              required 
-            />
+          <div className="form-group">
+            <label>Email Address</label>
+            <input type="email" name="email" className="form-input" value={formData.email} onChange={handleChange} required />
           </div>
-
-          <div className="input-group">
+          <div className="form-group">
             <label>Password</label>
-            <input 
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              required 
-            />
+            <input type="password" name="password" className="form-input" value={formData.password} onChange={handleChange} required />
           </div>
-
-          <button type="submit" className="login-submit-btn">
-            {isSignup ? 'Create your Amazon account' : 'Sign in'}
+          <button type="submit" className="btn-primary-amazon">
+            {isSignup ? 'Create Your Amazon Account' : 'Sign In'}
           </button>
         </form>
 
-        <p className="terms-text">
-          By continuing, you agree to Amazon's Conditions of Use and Privacy Notice.
-        </p>
-
-        <hr />
-
-        <button 
-          type="button"
-          className="toggle-auth-btn" 
-          onClick={() => setIsSignup(!isSignup)}
-        >
-          {isSignup ? 'Already have an account? Sign in' : 'Create your Amazon account'}
+        <button className="toggle-auth-btn" onClick={() => setIsSignup(!isSignup)}>
+          {isSignup ? 'Already have an account? Sign In' : 'New to Amazon? Create an account'}
         </button>
       </div>
     </div>
