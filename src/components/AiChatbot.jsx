@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import { FaRobot, FaPaperPlane, FaTimes } from 'react-icons/fa';
 import './AiChatbot.css';
 
@@ -11,7 +12,6 @@ const AiChatbot = () => {
   const [input, setInput] = useState('');
   const chatEndRef = useRef(null);
 
-  // Auto Scroll to Bottom on New Message
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -29,7 +29,7 @@ const AiChatbot = () => {
     const currentQuery = input;
     setInput('');
 
-    axios.post('http://localhost:8080/api/ai/chat', { message: currentQuery })
+    axios.post(`${API_BASE_URL}/ai/chat`, { message: currentQuery })
       .then(res => {
         setMessages(prev => [...prev, { sender: 'bot', text: res.data.response }]);
       })

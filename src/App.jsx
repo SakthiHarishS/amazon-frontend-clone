@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from './api';
 import Navbar from './components/Navbar';
 import SubHeader from './components/SubHeader';
 import ProductCard from './components/ProductCard';
@@ -69,12 +70,11 @@ function MainLayout({ products, handleSearch, handleCategorySelect, handleVisual
   const location = useLocation();
   const isAdminPage = location.pathname === '/admin';
 
-  // Issue 1 Fix: Interval check for Instant Auto-Logout if deleted by Admin
   useEffect(() => {
     const checkUserStatus = () => {
       const user = JSON.parse(localStorage.getItem('user'));
       if (user && user.id && !isAdminPage) {
-        axios.get('http://localhost:8080/api/users')
+        axios.get(`${API_BASE_URL}/users`)
           .then(res => {
             const userExists = res.data.some(u => u.id === user.id);
             if (!userExists) {
@@ -88,7 +88,7 @@ function MainLayout({ products, handleSearch, handleCategorySelect, handleVisual
     };
 
     checkUserStatus();
-    const interval = setInterval(checkUserStatus, 3000); // Polls every 3 seconds
+    const interval = setInterval(checkUserStatus, 3000);
     return () => clearInterval(interval);
   }, [location.pathname, isAdminPage]);
 
@@ -112,7 +112,6 @@ function MainLayout({ products, handleSearch, handleCategorySelect, handleVisual
         <Route path="/admin" element={<Admin />} />
       </Routes>
 
-      {/* Floating AI Assistant Chatbot */}
       {!isAdminPage && <AiChatbot />}
     </div>
   );
@@ -122,7 +121,7 @@ function App() {
   const [products, setProducts] = useState([]);
 
   const fetchAllProducts = () => {
-    axios.get('http://localhost:8080/api/products')
+    axios.get(`${API_BASE_URL}/products`)
       .then(res => setProducts(res.data))
       .catch(err => console.error(err));
   };
@@ -138,11 +137,11 @@ function App() {
     }
 
     if (searchTerm) {
-      axios.get(`http://localhost:8080/api/products/search?query=${searchTerm}`)
+      axios.get(`${API_BASE_URL}/products/search?query=${searchTerm}`)
         .then(res => setProducts(res.data))
         .catch(err => console.error(err));
     } else if (category !== 'All') {
-      axios.get(`http://localhost:8080/api/products/category/${category}`)
+      axios.get(`${API_BASE_URL}/products/category/${category}`)
         .then(res => setProducts(res.data))
         .catch(err => console.error(err));
     }
@@ -152,7 +151,7 @@ function App() {
     if (category === 'All') {
       fetchAllProducts();
     } else {
-      axios.get(`http://localhost:8080/api/products/category/${category}`)
+      axios.get(`${API_BASE_URL}/products/category/${category}`)
         .then(res => setProducts(res.data))
         .catch(err => console.error(err));
     }

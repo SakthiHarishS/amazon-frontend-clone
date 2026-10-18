@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { FaSearch, FaShoppingCart, FaMapMarkerAlt, FaCamera, FaHeart } from 'react-icons/fa';
+import { FaSearch, FaShoppingCart, FaMapMarkerAlt, FaCamera } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import './Navbar.css';
 
 const Navbar = ({ onSearch, onVisualSearch }) => {
@@ -39,7 +40,7 @@ const Navbar = ({ onSearch, onVisualSearch }) => {
       const formData = new FormData();
       formData.append('image', file);
 
-      axios.post('http://localhost:8080/api/ai/visual-search', formData, {
+      axios.post(`${API_BASE_URL}/ai/visual-search`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       .then(res => {
@@ -97,7 +98,6 @@ const Navbar = ({ onSearch, onVisualSearch }) => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
-        {/* Hidden File Input for Visual Search */}
         <input 
           type="file" 
           ref={fileInputRef} 
@@ -106,7 +106,6 @@ const Navbar = ({ onSearch, onVisualSearch }) => {
           onChange={handleImageUpload}
         />
 
-        {/* Camera Icon Button */}
         <button 
           type="button" 
           className="camera-search-btn" 
@@ -134,7 +133,6 @@ const Navbar = ({ onSearch, onVisualSearch }) => {
           </Link>
         )}
 
-        {/* Issue 3 Fix: Wish List Option in Navbar with Badge */}
         <Link to="/wishlist" className="nav-option" style={{ color: 'white', textDecoration: 'none' }}>
           <span className="line-one">Your</span>
           <span className="line-two" style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>

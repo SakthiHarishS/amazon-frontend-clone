@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import { Link } from 'react-router-dom';
 import { FaBox, FaTruck, FaShippingFast, FaCheckCircle, FaTimesCircle, FaFileInvoice } from 'react-icons/fa';
 import './Orders.css';
@@ -10,7 +11,7 @@ const Orders = () => {
 
   const fetchUserOrders = () => {
     if (user && user.email) {
-      axios.get(`http://localhost:8080/api/orders/user/${user.email}`)
+      axios.get(`${API_BASE_URL}/orders/user/${user.email}`)
         .then(res => setOrders(res.data))
         .catch(err => console.error(err));
     }
@@ -22,16 +23,15 @@ const Orders = () => {
 
   const handleCancelOrder = (orderId) => {
     if (window.confirm('Are you sure you want to cancel this order?')) {
-      axios.put(`http://localhost:8080/api/orders/${orderId}/cancel`)
+      axios.put(`${API_BASE_URL}/orders/${orderId}/cancel`)
         .then(() => {
           alert('Order cancelled successfully!');
           fetchUserOrders();
         })
-        .catch(err => alert('Failed to cancel order'));
+        .catch(() => alert('Failed to cancel order'));
     }
   };
 
-  // Amazon Tax Invoice Generator
   const handleDownloadInvoice = (order) => {
     const printWindow = window.open('', '_blank');
     const invoiceContent = `
@@ -146,7 +146,6 @@ const Orders = () => {
                   <p>{order.id}</p>
                 </div>
                 <div>
-                  {/* Download Invoice Button */}
                   <button className="btn-invoice" onClick={() => handleDownloadInvoice(order)}>
                     <FaFileInvoice /> Invoice
                   </button>

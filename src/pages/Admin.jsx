@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import './Admin.css';
 
 const Admin = () => {
@@ -41,9 +42,9 @@ const Admin = () => {
   };
 
   const loadAllData = () => {
-    axios.get('http://localhost:8080/api/products').then(res => setProducts(res.data)).catch(err => console.error(err));
-    axios.get('http://localhost:8080/api/orders').then(res => setOrders(res.data)).catch(err => console.error(err));
-    axios.get('http://localhost:8080/api/users').then(res => setUsers(res.data)).catch(err => console.error(err));
+    axios.get(`${API_BASE_URL}/products`).then(res => setProducts(res.data)).catch(err => console.error(err));
+    axios.get(`${API_BASE_URL}/orders`).then(res => setOrders(res.data)).catch(err => console.error(err));
+    axios.get(`${API_BASE_URL}/users`).then(res => setUsers(res.data)).catch(err => console.error(err));
   };
 
   useEffect(() => {
@@ -75,8 +76,7 @@ const Admin = () => {
     };
 
     if (editingProductId) {
-      // Edit / Modify Existing Product
-      axios.put(`http://localhost:8080/api/products/${editingProductId}`, payload)
+      axios.put(`${API_BASE_URL}/products/${editingProductId}`, payload)
         .then(() => {
           alert('Product updated successfully!');
           resetForm();
@@ -84,8 +84,7 @@ const Admin = () => {
         })
         .catch(err => console.error(err));
     } else {
-      // Add New Product
-      axios.post('http://localhost:8080/api/products', payload)
+      axios.post(`${API_BASE_URL}/products`, payload)
         .then(() => {
           alert('Product added successfully!');
           resetForm();
@@ -115,22 +114,22 @@ const Admin = () => {
 
   const handleDeleteProduct = (id) => {
     if (window.confirm('Delete this product from catalog?')) {
-      axios.delete(`http://localhost:8080/api/products/${id}`).then(() => loadAllData());
+      axios.delete(`${API_BASE_URL}/products/${id}`).then(() => loadAllData());
     }
   };
 
   const handleStatusChange = (orderId, newStatus) => {
-    axios.put(`http://localhost:8080/api/orders/${orderId}/status`, { status: newStatus })
+    axios.put(`${API_BASE_URL}/orders/${orderId}/status`, { status: newStatus })
       .then(() => {
         alert(`Order #${orderId} status updated to ${newStatus}`);
         loadAllData();
       })
-      .catch(err => alert('Failed to update status'));
+      .catch(() => alert('Failed to update status'));
   };
 
   const handleDeleteUser = (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
-      axios.delete(`http://localhost:8080/api/users/${userId}`)
+      axios.delete(`${API_BASE_URL}/users/${userId}`)
         .then(() => {
           alert('User deleted successfully!');
           loadAllData();

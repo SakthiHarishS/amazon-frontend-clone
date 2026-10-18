@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { FaStar, FaTimes, FaRobot, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
+import { FaTimes, FaRobot, FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 import './ProductModal.css';
 
 const ProductModal = ({ product, onClose, onAddToCart }) => {
@@ -11,12 +12,12 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
 
   const fetchReviewsAndSummary = () => {
     setLoadingAi(true);
-    axios.get(`http://localhost:8080/api/ai/review-summary/${product.id}`)
+    axios.get(`${API_BASE_URL}/ai/review-summary/${product.id}`)
       .then(res => setAiSummary(res.data))
       .catch(err => console.error(err))
       .finally(() => setLoadingAi(false));
 
-    axios.get(`http://localhost:8080/api/reviews/product/${product.id}`)
+    axios.get(`${API_BASE_URL}/reviews/product/${product.id}`)
       .then(res => setReviews(res.data))
       .catch(err => console.error(err));
   };
@@ -39,7 +40,7 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
       comment: newReview.comment
     };
 
-    axios.post('http://localhost:8080/api/reviews', payload)
+    axios.post(`${API_BASE_URL}/reviews`, payload)
       .then(() => {
         alert('Review submitted successfully!');
         setNewReview({ userName: '', rating: 5, comment: '' });
@@ -56,12 +57,10 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
         <button className="modal-close-btn" onClick={onClose}><FaTimes /></button>
 
         <div className="modal-grid">
-          {/* Left: Product Image */}
           <div className="modal-image-col">
             <img src={product.imageUrl} alt={product.name} />
           </div>
 
-          {/* Right: Details & AI Review Highlights */}
           <div className="modal-info-col">
             <h2 className="modal-product-title">{product.name}</h2>
             <p className="modal-category-badge">{product.category}</p>
@@ -73,7 +72,6 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
 
             <p className="modal-description">{product.description}</p>
 
-            {/* AI Review Summary Box */}
             <div className="ai-summary-card">
               <div className="ai-summary-header">
                 <FaRobot className="ai-icon" />
@@ -92,14 +90,14 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
                       <div className="pros-box">
                         <span className="box-title"><FaThumbsUp /> Pros</span>
                         <ul>
-                          {aiSummary.pros.map((p, idx) => <li key={idx}>{p}</li>)}
+                          {aiSummary.pros && aiSummary.pros.map((p, idx) => <li key={idx}>{p}</li>)}
                         </ul>
                       </div>
 
                       <div className="cons-box">
                         <span className="box-title"><FaThumbsDown /> Cons</span>
                         <ul>
-                          {aiSummary.cons.map((c, idx) => <li key={idx}>{c}</li>)}
+                          {aiSummary.cons && aiSummary.cons.map((c, idx) => <li key={idx}>{c}</li>)}
                         </ul>
                       </div>
                     </div>
@@ -114,7 +112,6 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
           </div>
         </div>
 
-        {/* User Reviews & Add Review Section */}
         <div className="modal-reviews-section">
           <h3>Customer Reviews ({reviews.length})</h3>
 
@@ -154,7 +151,7 @@ const ProductModal = ({ product, onClose, onAddToCart }) => {
               <div key={idx} className="review-item-card">
                 <div className="review-user-row">
                   <b>{r.userName}</b>
-                  <span className="review-stars">{"⭐".repeat(r.rating)}</span>
+                  <span className="review-stars">{"⭐".repeat(r.rating || 5)}</span>
                 </div>
                 <p>{r.comment}</p>
               </div>
