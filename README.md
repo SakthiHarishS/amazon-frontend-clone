@@ -27,12 +27,3 @@ A responsive and feature-rich E-Commerce frontend web application replicating co
 - **Icons:** React Icons (`fa` suite)
 - **Deployment:** Vercel (Configured with single-page application rewrites)
 
----
-
-## ⚙️ Environment Variables Setup
-
-Create a `.env` file in the root directory and add:
-
-```env
-VITE_API_BASE_URL=[https://amazon-backend-clone-x61b.onrender.com/api](https://amazon-backend-clone-x61b.onrender.com/api)
-VITE_RAZORPAY_KEY_ID=rzp_test_YOUR_KEY_ID
