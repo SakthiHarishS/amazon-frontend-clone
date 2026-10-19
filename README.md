@@ -1,16 +1,38 @@
-# React + Vite
+# 🛒 Amazon Clone - React Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive and feature-rich E-Commerce frontend web application replicating core Amazon functionalities. Built using **React.js (Vite)**, **React Router**, and **Axios** for smooth REST API integration.
 
-Currently, two official plugins are available:
+## 🚀 Live Application
+- **Live Website:** [https://amazon-ecommerce-clone-wine.vercel.app](https://amazon-ecommerce-clone-wine.vercel.app)
+- **Hosted Platform:** Vercel
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Key Features
+- **Product Discovery & Search:** Dynamic product filtering by categories (Electronics, Fashion, Books, etc.) and keyword search.
+- **AI-Powered Visual Search:** Upload an image to find similar products in the catalog.
+- **Cart & Wishlist Management:** Interactive shopping cart with real-time price calculation and wishlist tracking.
+- **Razorpay Payment Gateway:** Integrated Razorpay checkout popup for digital payments (UPI, Cards, Netbanking) along with Cash on Delivery (COD).
+- **Interactive AI Assistant:** Floating AI shopping chatbot for product recommendations and budget suggestions.
+- **AI Customer Review Summarizer:** Automated breakdown of product pros, cons, and buyer sentiments inside product modals.
+- **Seller Central (Admin Dashboard):** Dedicated admin management view to add, edit, or remove catalog items and manage registered users.
+- **Order Tracking & Invoicing:** Real-time visual progress tracker (`PLACED`, `SHIPPED`, `OUT FOR DELIVERY`, `DELIVERED`) with downloadable/printable **Tax Invoices**.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
+- **Library:** React.js (v18+) with Vite
+- **Routing:** React Router DOM (v6)
+- **HTTP Client:** Axios
+- **Icons:** React Icons (`fa` suite)
+- **Deployment:** Vercel (Configured with single-page application rewrites)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## ⚙️ Environment Variables Setup
+
+Create a `.env` file in the root directory and add:
+
+```env
+VITE_API_BASE_URL=[https://amazon-backend-clone-x61b.onrender.com/api](https://amazon-backend-clone-x61b.onrender.com/api)
+VITE_RAZORPAY_KEY_ID=rzp_test_YOUR_KEY_ID
